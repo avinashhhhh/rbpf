@@ -60,7 +60,7 @@ jobs:
            cargo package --allow-dirty 
   release:
     name: Release
-    if: github.event_name == 'release' && github.event.action == 'created'
+#     if: github.event_name == 'release' && github.event.action == 'created'
     needs: build
     runs-on: ubuntu-latest
     steps:
