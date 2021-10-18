@@ -81,6 +81,8 @@ jobs:
            done
            tag_name="${GITHUB_REF##*/}"
            hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
+        env:
+         GITHUB_TOKEN: ${{ secrets.PAT }}
       - name: cargo login
         run: cargo login ${{ secrets.CRATES_IO_TOKEN}}
       - run: |
