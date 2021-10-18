@@ -52,42 +52,7 @@ jobs:
            cargo doc
            cargo package --allow-dirty 
 
-  release:
-    runs-on: ubuntu-latest
-    needs: build
-    name: Create a release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
-      - name: Print github.ref
-        run: |
-          echo {{ github.ref }}
-      - name: Create release on github
-        if: startsWith(github.ref, 'refs/tags/v*')
-        run: |
-           set -x
-           assets=()
-           for asset in ${{ runner.workspace }}/*.tgz; do
-             assets+=("-a" "$asset")
-           done
-           tag_name="${GITHUB_REF##*/}"
-           hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
-        env:
-         GITHUB_TOKEN: ${{ secrets.PAT }}
-      - name: cargo login
-        run: cargo login ${{ secrets.CRATES_IO_TOKEN}}
-      - run: |
-          cargo publish --allow-dirty
-
+  
 #       - name: Create Release 
 #         uses: actions/checkout@v2
 #         with:
