@@ -85,6 +85,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          DEFAULT_BUMP: patch
       - name: cargo login
         run: cargo login ${{ secrets.CRATES_IO_TOKEN}}
       - run: | 
