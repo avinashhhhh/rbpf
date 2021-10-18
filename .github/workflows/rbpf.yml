@@ -42,13 +42,6 @@ jobs:
           restore-keys: ${{ runner.os }}-cargo-  
       - run : |
             rustup update
-            rustup component add clippy-preview
-            rustup component add rustfmt
-            cargo fmt --all -- --check
-            cargo clippy --all --tests -- --deny=warnings
-            set RUSTFLAGS="-D warnings"
-            cargo build --verbose
-            cargo test --verbose
       - name: if conditions
         if: ${{ matrix.rust == 'nightly' }}
         run : |
