@@ -60,7 +60,7 @@ jobs:
            cargo package --allow-dirty 
   release:
     name: Release
-#     if : ${{ startsWith(github.ref, 'refs/tags/v*' && github.ref == 'refs/heads/main') }}
+    if: github.event_name == 'release' && github.event.action == 'created'
     needs: build
     runs-on: ubuntu-latest
     steps:
